@@ -122,13 +122,10 @@ export default function MurphyBot() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": process.env.REACT_APP_ANTHROPIC_KEY,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-calls": "true",
         },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: MURPHY_SYSTEM,
-          messages: apiMessages,
-        }),
       });
 
       const data = await res.json();
