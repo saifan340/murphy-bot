@@ -130,7 +130,6 @@ export default function MurphyBot() {
         messages: apiMessages,
       }),
 });
-      });
 
       const data = await res.json();
       const reply =
