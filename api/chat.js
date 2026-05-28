@@ -16,9 +16,11 @@ module.exports = async function handler(req, res) {
       }),
     });
     const data = await response.json();
+    console.log("Groq response:", JSON.stringify(data));
     const reply = data.choices?.[0]?.message?.content || "...Sprachmodul ausgefallen. Typisch.";
     res.status(200).json({ content: [{ type: "text", text: reply }] });
   } catch (err) {
+    console.log("Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 };
