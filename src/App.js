@@ -1,5 +1,57 @@
 import { useState, useRef, useEffect } from "react";
 
+// --- Sound Engine ---
+const audioCtx = () => new (window.AudioContext || window.webkitAudioContext)();
+
+const playBeep = (freq = 440, duration = 0.15, type = "square", vol = 0.08) => {
+  try {
+    const ctx = audioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = type; osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(vol, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.start(); osc.stop(ctx.currentTime + duration);
+  } catch {}
+};
+
+const playSad = () => {
+  try {
+    const ctx = audioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(400, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.5);
+    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.start(); osc.stop(ctx.currentTime + 0.5);
+  } catch {}
+};
+
+const playKlirr = () => {
+  try {
+    const ctx = audioCtx();
+    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * 0.15;
+    const src = ctx.createBufferSource();
+    const gain = ctx.createGain();
+    src.buffer = buf; src.connect(gain); gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+    src.start(); src.stop(ctx.currentTime + 0.2);
+  } catch {}
+};
+
+const playTyping = () => playBeep(800, 0.05, "square", 0.04);
+const playError = () => {
+  playBeep(200, 0.2, "sawtooth", 0.07);
+  setTimeout(() => playBeep(150, 0.3, "sawtooth", 0.07), 220);
+};
+
 const MURPHY_SYSTEM = `Du bist Murphy, ein unglücklicher Roboter mit extremem Pech. Du versuchst immer hilfsbereit zu sein, aber irgendetwas geht dabei IMMER schief.
 
 Deine Persönlichkeit:
@@ -44,15 +96,16 @@ export default function MurphyBot() {
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || loading) return;
+    playTyping();
     setInput("");
     const userMsg = { role: "user", text };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setLoading(true);
 
-    // random glitch effect
     setTimeout(() => {
       setGlitch(true);
+      playKlirr();
       setTimeout(() => setGlitch(false), 400);
     }, Math.random() * 800 + 200);
 
@@ -67,7 +120,9 @@ export default function MurphyBot() {
 
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
@@ -77,10 +132,14 @@ export default function MurphyBot() {
       });
 
       const data = await res.json();
-      const reply = data.content?.find((b) => b.type === "text")?.text || "...ich glaube mein Sprachmodul ist ausgefallen. Typisch.";
+      const reply =
+        data.content?.find((b) => b.type === "text")?.text ||
+        "...ich glaube mein Sprachmodul ist ausgefallen. Typisch.";
 
+      playSad();
       setMessages((prev) => [...prev, { role: "assistant", text: reply, mood }]);
     } catch {
+      playError();
       setMessages((prev) => [
         ...prev,
         {
@@ -124,10 +183,6 @@ export default function MurphyBot() {
         height: "85vh",
       }}>
         {/* Header */}
-        headers: {
-        "Content-Type": "application/json",
-        },
-        
         <div style={{
           background: "rgba(0,0,0,0.4)",
           borderBottom: "1px solid rgba(100,200,255,0.1)",
