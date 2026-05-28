@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# 🤖 Murphy – Der Pechvogel-Roboter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> *„Was schiefgehen kann, geht schief."* – Murphys Gesetz
 
-## Available Scripts
+Murphy ist ein KI-Chatbot mit einer einzigartigen Persönlichkeit: Er versucht immer hilfsbereit zu sein – aber irgendetwas geht dabei **immer** schief. 😢
 
-In the project directory, you can run:
+## 🔗 Live Demo
+👉 [murphy-bot.vercel.app](https://murphy-bot.vercel.app)
 
-### `npm start`
+## ✨ Features
+- 🧠 **KI-Persönlichkeit** via Groq API (Llama 3.1)
+- 🔊 **Soundeffekte** mit Web Audio API (kein externes File)
+- ⚡ **Glitch-Animationen** bei jeder Antwort
+- 🎭 **Wechselnde Moods** – Murphy fühlt immer anders (schlecht)
+- 🇩🇪 **Komplett auf Deutsch**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Tech Stack
+| Technologie | Verwendung |
+|-------------|------------|
+| React | Frontend |
+| Groq API (Llama 3.1) | KI-Antworten |
+| Web Audio API | Soundeffekte |
+| Vercel Serverless Functions | API Proxy |
+| Vercel | Deployment |
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Installation
 
-### `npm test`
+```bash
+git clone https://github.com/saifan340/murphy-bot.git
+cd murphy-bot
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ⚙️ Environment Variables
 
-### `npm run build`
+Erstelle eine `.env.local` Datei:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+GROQ_API_KEY=dein_groq_key_hier
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Groq API Key kostenlos unter: [console.groq.com](https://console.groq.com)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📁 Projektstruktur
 
-### `npm run eject`
+```
+murphy-bot/
+├── api/
+│   └── chat.js        # Vercel Serverless Function
+├── src/
+│   └── App.js         # React Frontend
+├── vercel.json        # Vercel Konfiguration
+└── README.md
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 👨‍💻 Autor
+**Saifan Aremenak** – Junior Developer  
+[GitHub](https://github.com/saifan340)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+*Gebaut mit 💔 und viel Pech.*
