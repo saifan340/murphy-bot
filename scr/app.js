@@ -124,6 +124,10 @@ export default function MurphyBot() {
         height: "85vh",
       }}>
         {/* Header */}
+        headers: {
+        "Content-Type": "application/json",
+        },
+        
         <div style={{
           background: "rgba(0,0,0,0.4)",
           borderBottom: "1px solid rgba(100,200,255,0.1)",
